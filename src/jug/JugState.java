@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by harry on 15/02/2018.
  */
 
-public class JugState implements State<JugState> {
+public class JugState implements State {
     private Jug container1;
     private Jug container2;
 
@@ -18,8 +18,8 @@ public class JugState implements State<JugState> {
     }
 
     @Override
-    public ArrayList<JugState> getSuccessors() {
-        ArrayList<JugState> successors = new ArrayList<>();
+    public ArrayList<State> getSuccessors() {
+        ArrayList<State> successors = new ArrayList<>();
 
         if(!container1.isEmpty()) {
             container1.fillInto(container2).ifPresent(successors::add);

@@ -44,10 +44,9 @@ public class Search {
     }
 
     private void expand(TreeNode node) {
-        Stream<State> successors = node.getState().getSuccessors().stream();
-
-        open.addAll(successors.filter(state -> !open.contains(new TreeNode(state)) && !closed.contains(new TreeNode(state)))
-                .map(state -> new TreeNode(node, state))
+        open.addAll(node.getState().getSuccessors().stream()
+                .filter(state -> !open.contains(new TreeNode(state)) && !closed.contains(new TreeNode(state)))
+                .map(state -> new TreeNode(state, node))
                 .collect(Collectors.toList()));
     }
 }
