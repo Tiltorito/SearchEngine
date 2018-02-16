@@ -8,20 +8,22 @@ import java.util.stream.Stream;
  * Created by harry on 15/02/2018.
  */
 
-public class Search {
-    private ArrayDeque<TreeNode> open = new ArrayDeque<>();
-    private ArrayDeque<TreeNode> closed = new ArrayDeque<>();
+public class Search<T extends State> {
+    private ArrayDeque<TreeNode<T>> open = new ArrayDeque<>();
+    private ArrayDeque<TreeNode<T>> closed = new ArrayDeque<>();
+    private Predicate<T> predicate;
 
-    public Search(State initState) {
-        open.addLast(new TreeNode(initState));
+    public Search(State<T> initState, Predicate<T> predicate) {
+        open.addLast(new TreeNode<T>(initState));
+        this.predicate = predicate;
     }
 
-    public Optional<ArrayDeque<State>> runSearch() {
+    public Optional<ArrayDeque<State<T>>> runSearch() {
         while(!open.isEmpty()) {
-            TreeNode node = pickNode();
+            TreeNode<T> node = pickNode();
 
-            if(node.getState().isTheGoal()) {
-                ArrayDeque<State> stack = new ArrayDeque<>();
+            if(predicate.test(node.getState().getState())) {
+                ArrayDeque<State<T>> stack = new ArrayDeque<>();
 
                 while(node != null) {
                     stack.push(node.getState());
@@ -33,20 +35,21 @@ public class Search {
 
             closed.add(node);
 
-            expand(node);
+            open.addAll(expand(node));
         }
 
         return Optional.empty();
     }
 
-    private TreeNode pickNode() {
+    private TreeNode<T> pickNode() {
         return open.removeLast();
     }
 
-    private void expand(TreeNode node) {
-        open.addAll(node.getState().getSuccessors().stream()
-                .filter(state -> !open.contains(new TreeNode(state)) && !closed.contains(new TreeNode(state)))
-                .map(state -> new TreeNode(state, node))
-                .collect(Collectors.toList()));
+    private Collection<TreeNode<T>> expand(TreeNode<T> node) {
+        return node.getState().getSuccessors().stream()
+                .filter(state -> !open.contains(new TreeNode<T>(state)) && !closed.contains(new TreeNode<T>(state)))
+                .map(state -> new TreeNode<T>(state, node))
+                .collect(Collectors.toList());
     }
+
 }

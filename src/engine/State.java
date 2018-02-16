@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * Created by harry on 15/02/2018.
  */
 
-public interface State {
-    ArrayList<State> getSuccessors();
+public interface State<T extends State> {
+    ArrayList<State<T>> getSuccessors();
     boolean sameAs(State state);
-    boolean isTheGoal();
+    T getState();
 }

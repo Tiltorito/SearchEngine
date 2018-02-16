@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by harry on 15/02/2018.
  */
 
-public class HanoiState implements State {
+public class HanoiState implements State<HanoiState> {
     private Stack<Integer> A;
     private Stack<Integer> B;
     private Stack<Integer> C;
@@ -20,8 +20,8 @@ public class HanoiState implements State {
     }
 
     @Override
-    public ArrayList<State> getSuccessors() {
-        ArrayList<State> successors = new ArrayList<>();
+    public ArrayList<State<HanoiState>> getSuccessors() {
+        ArrayList<State<HanoiState>> successors = new ArrayList<>();
 
         if(validMove(A, B)) {
             Pair p = transfer(A,B);
@@ -65,10 +65,6 @@ public class HanoiState implements State {
         return false;
     }
 
-    @Override
-    public boolean isTheGoal() {
-        return A.isEmpty() && B.isEmpty();
-    }
 
     private boolean validMove(Stack<Integer> from, Stack<Integer> to) {
         if(from.isEmpty()) {
@@ -99,5 +95,10 @@ public class HanoiState implements State {
         str.append("C -> ").append(C.toString());
 
         return str.toString();
+    }
+
+    @Override
+    public HanoiState getState() {
+        return this;
     }
 }

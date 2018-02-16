@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by harry on 15/02/2018.
  */
 
-public class JugState implements State {
+public class JugState implements State<JugState> {
     private Jug container1;
     private Jug container2;
 
@@ -18,8 +18,8 @@ public class JugState implements State {
     }
 
     @Override
-    public ArrayList<State> getSuccessors() {
-        ArrayList<State> successors = new ArrayList<>();
+    public ArrayList<State<JugState>> getSuccessors() {
+        ArrayList<State<JugState>> successors = new ArrayList<>();
 
         if(!container1.isEmpty()) {
             container1.fillInto(container2).ifPresent(successors::add);
@@ -62,6 +62,13 @@ public class JugState implements State {
         return false;
     }
 
+    public Jug getContainer1() {
+        return container1;
+    }
+
+    public Jug getContainer2() {
+        return container2;
+    }
 
     @Override
     public String toString() {
@@ -88,7 +95,7 @@ public class JugState implements State {
     }
 
     @Override
-    public boolean isTheGoal() {
-        return container1.getCurrentCapacity() == 6 || container2.getCurrentCapacity() == 6;
+    public JugState getState() {
+        return this;
     }
 }

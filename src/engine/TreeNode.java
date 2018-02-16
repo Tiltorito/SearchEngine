@@ -4,40 +4,39 @@ package engine;
  * Created by harry on 15/02/2018.
  */
 
-public class TreeNode {
-    private TreeNode parent;
-    private State state;
+public class TreeNode<T extends State> {
+    private TreeNode<T> parent;
+    private State<T> state;
 
-    public TreeNode(State state) {
+    public TreeNode(State<T> state) {
         this(state, null);
     }
 
-    public TreeNode(State state, TreeNode parent) {
+    public TreeNode(State<T> state, TreeNode<T> parent) {
         this.state = state;
         this.parent = parent;
-
     }
 
-    public TreeNode getParent() {
+    public TreeNode<T> getParent() {
         return parent;
     }
 
-    public void setParent(TreeNode parent) {
+    public void setParent(TreeNode<T> parent) {
         this.parent = parent;
     }
 
-    public State getState() {
+    public State<T> getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(State<T> state) {
         this.state = state;
     }
 
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof TreeNode) {
-            TreeNode otherNode = (TreeNode) obj;
+            TreeNode otherNode = (TreeNode) obj; // this is risky, examine it later
             return state.sameAs(otherNode.state);
         }
 
