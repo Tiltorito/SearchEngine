@@ -56,13 +56,8 @@ public class HanoiState implements State<HanoiState> {
     }
 
     @Override
-    public boolean sameAs(State state) {
-        if(state instanceof HanoiState) {
-            HanoiState hanoiState = (HanoiState) state;
-            return A.equals(hanoiState.A) && B.equals(hanoiState.B) && C.equals(hanoiState.C);
-        }
-
-        return false;
+    public boolean sameAs(HanoiState state) {
+        return A.equals(state.A) && B.equals(state.B) && C.equals(state.C);
     }
 
 

@@ -53,13 +53,8 @@ public class JugState implements State<JugState> {
     }
 
     @Override
-    public boolean sameAs(State state) {
-        if(state instanceof JugState) {
-            JugState jugState = (JugState) state;
-            return container1.equals(jugState.container1) && container2.equals(jugState.container2);
-        }
-
-        return false;
+    public boolean sameAs(JugState state) {
+        return container1.equals(state.container1) && container2.equals(state.container2);
     }
 
     public Jug getContainer1() {

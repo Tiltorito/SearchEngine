@@ -36,8 +36,9 @@ public class TreeNode<T extends State> {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof TreeNode) {
-            TreeNode otherNode = (TreeNode) obj; // this is risky, examine it later
-            return state.sameAs(otherNode.state);
+            TreeNode<T> otherNode = (TreeNode<T>) obj; // this is risky, examine it later
+            boolean value =  state.sameAs(otherNode.state.getState());
+            return value;
         }
 
         return false;

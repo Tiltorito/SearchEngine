@@ -8,6 +8,6 @@ import java.util.ArrayList;
 
 public interface State<T extends State> {
     ArrayList<State<T>> getSuccessors();
-    boolean sameAs(State state);
+    boolean sameAs(T state);
     T getState();
 }
